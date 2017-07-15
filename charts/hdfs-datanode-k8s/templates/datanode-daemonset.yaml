@@ -51,7 +51,7 @@ spec:
       hostPID: true
       containers:
         - name: datanode
-          image: uhopper/hadoop-datanode:2.7.2
+          image: registry.cn-hangzhou.aliyuncs.com/kb_containers/hadoop-datanode:latest
           env:
             # The below uses two loops to make sure the last item does not have comma. It uses index 0
             # for the last item since that is the only special index that helm template gives us.
@@ -89,6 +89,9 @@ spec:
             - name: resolv-conf-volume
               mountPath: /etc/resolv.conf
               subPath: resolv.conf
+            - name: resolv-conf-volume
+              mountPath: /etc/hosts
+              subPath: hosts
       restartPolicy: Always
       volumes:
         {{- range $index, $path := .Values.dataNodeHostPath }}
@@ -101,4 +104,6 @@ spec:
             items:
             - key: resolv.conf
               path: resolv.conf
+            - key: hosts
+              path: hosts
           name: resolv-conf-volume

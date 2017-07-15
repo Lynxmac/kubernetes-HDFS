@@ -21,6 +21,11 @@ kind: ConfigMap
 metadata:
   name: hdfs-resolv-conf
 data:
+  hosts: |
+    192.168.1.101 k8s-master
+    192.168.1.102 k8s-node1
+    192.168.1.103 k8s-node2
+    192.168.1.104 k8s-node3
   resolv.conf: |
     search default.svc.cluster.local svc.cluster.local cluster.local {{ .Values.hostNetworkDomains }}
     nameserver {{ .Values.clusterDnsIP }}

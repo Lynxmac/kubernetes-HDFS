@@ -48,7 +48,7 @@ spec:
       hostPID: true
       containers:
         - name: hdfs-namenode
-          image: uhopper/hadoop-namenode:2.7.2
+          image: registry.cn-hangzhou.aliyuncs.com/kb_containers/hadoop-namenode:latest
           env:
             - name: CLUSTER_NAME
               value: hdfs-k8s
@@ -63,6 +63,9 @@ spec:
             - name: resolv-conf-volume
               mountPath: /etc/resolv.conf
               subPath: resolv.conf
+            - name: resolv-conf-volume
+              mountPath: /etc/hosts
+              subPath: hosts
       # Pin the pod to a node. You can label your node like below:
       #   $ kubectl label nodes YOUR-NODE hdfs-namenode-selector=hdfs-namenode-0
       nodeSelector:
@@ -77,4 +80,7 @@ spec:
             items:
             - key: resolv.conf
               path: resolv.conf
+            - key: hosts
+              path: hosts
           name: resolv-conf-volume
+
